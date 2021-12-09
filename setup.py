@@ -3,7 +3,7 @@
 
 import os
 import codecs
-from setuptools import setup
+from setuptools import setup, find_packages
 
 
 def read(fname):
@@ -22,7 +22,8 @@ setup(
     url='https://github.com/mbattifarano/pytest-experiments',
     description='A pytest plugin for numerical experiments.',
     long_description=read('README.rst'),
-    py_modules=['pytest_experiments'],
+    packages=find_packages(where='src', exclude=['test']),
+    package_dir={"": "src"},
     python_requires='>=3.5',
     install_requires=['pytest>=3.5.0'],
     classifiers=[
@@ -44,7 +45,7 @@ setup(
     ],
     entry_points={
         'pytest11': [
-            'experiments = pytest_experiments',
+            'experiments = pytest_experiments.fixtures',
         ],
     },
 )
