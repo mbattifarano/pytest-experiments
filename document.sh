@@ -1,0 +1,1 @@
+sphinx-apidoc -e -f -o docs/source src/pytest_experiments

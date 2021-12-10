@@ -1,16 +1,13 @@
-.. pytest-experiments documentation master file, created by
-   sphinx-quickstart on Thu Oct  1 00:43:18 2015.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+.. include:: ../README.rst
 
-Welcome to pytest-experiments's documentation!
-===============================================================
 
-Contents:
+Contents
+--------
 
 .. toctree::
    :maxdepth: 2
 
+   source/pytest_experiments
 
 
 Indices and tables

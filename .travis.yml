@@ -7,8 +7,8 @@ python:
   - "3.9"
   - "pypy3"
 install:
-  - pip install -r dev_requirements
+  - pip install -r dev_requirements.txt
   - pip install .
 script:
-  - pytest
+  - pytest --cov
   - prospector
