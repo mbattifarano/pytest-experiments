@@ -2,7 +2,10 @@ import datetime as dt
 import pytest
 from .config import OUTCOMES_ATTR
 from .common import (
-    PytestExperimentsError, PytestOutcome, PytestReportPhase, ExperimentOutcome
+    PytestExperimentsError,
+    PytestOutcome,
+    PytestReportPhase,
+    ExperimentOutcome,
 )
 from .store import StorageManager, ExperimentModel
 

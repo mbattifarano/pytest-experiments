@@ -1,7 +1,13 @@
 import datetime as dt
 from typing import List
 from sqlalchemy import (
-    create_engine, select, Column, Integer, Text, JSON, DateTime
+    create_engine,
+    select,
+    Column,
+    Integer,
+    Text,
+    JSON,
+    DateTime,
 )
 from sqlalchemy.orm import declarative_base, Session
 from .config import EXPERIMENT_TABLENAME
@@ -25,22 +31,45 @@ class ExperimentModel(Base):
 
     See https://docs.sqlalchemy.org/en/14/core/type_basics.html?highlight=data%20types#sqlalchemy.types.JSON  # noqa
     """
+
     __tablename__ = EXPERIMENT_TABLENAME
 
-    id = Column("id", Integer, primary_key=True, autoincrement=True,
-                comment="A unique identifier for an experiment run")
-    start_time = Column("start_time", DateTime,
-                        comment="The UTC timestamp of the experiment start")
-    end_time = Column("end_time", DateTime,
-                      comment="The UTC timestamp of the experiment end")
-    name = Column("name", Text, nullable=False,
-                  comment="The name of the experiment")
-    outcome = Column("outcome", Text, nullable=False,
-                     comment="The outcome of the experiment")
-    parameters = Column("parameters", JSON, nullable=False,
-                        comment="The experiment input parameters")
-    data = Column("data", JSON, nullable=False,
-                  comment="Data collected during the experiment")
+    id = Column(
+        "id",
+        Integer,
+        primary_key=True,
+        autoincrement=True,
+        comment="A unique identifier for an experiment run",
+    )
+    start_time = Column(
+        "start_time",
+        DateTime,
+        comment="The UTC timestamp of the experiment start",
+    )
+    end_time = Column(
+        "end_time", DateTime, comment="The UTC timestamp of the experiment end"
+    )
+    name = Column(
+        "name", Text, nullable=False, comment="The name of the experiment"
+    )
+    outcome = Column(
+        "outcome",
+        Text,
+        nullable=False,
+        comment="The outcome of the experiment",
+    )
+    parameters = Column(
+        "parameters",
+        JSON,
+        nullable=False,
+        comment="The experiment input parameters",
+    )
+    data = Column(
+        "data",
+        JSON,
+        nullable=False,
+        comment="Data collected during the experiment",
+    )
 
     @property
     def start_time_tz(self) -> dt.datetime:
@@ -65,7 +94,7 @@ class StorageManager:
             db_uri,
             json_serializer=json_serializer,
             json_deserializer=json_deserializer,
-            future=True
+            future=True,
         )
         initialize_database(self.engine)
 
@@ -89,8 +118,4 @@ class StorageManager:
     def get_all_experiments(self) -> List[ExperimentModel]:
         """Return all experiments in the database."""
         with self.create_session() as session:
-            return (
-                session.execute(select(ExperimentModel))
-                       .scalars()
-                       .all()
-            )
+            return session.execute(select(ExperimentModel)).scalars().all()

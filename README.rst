@@ -10,11 +10,11 @@ pytest-experiments
     :target: https://pypi.org/project/pytest-experiments
     :alt: Python versions
 
-.. image:: https://ci.appveyor.com/api/projects/status/github/mbattifarano/pytest-experiments?branch=master
-    :target: https://ci.appveyor.com/project/mbattifarano/pytest-experiments/branch/master
-    :alt: See Build Status on AppVeyor
+.. image:: https://app.travis-ci.com/mbattifarano/pytest-experiments.svg?branch=main
+    :target: https://app.travis-ci.com/mbattifarano/pytest-experiments 
+    :alt: See Build Status on travis
 
-A pytest plugin for numerical experiments.
+A pytest plugin for organizing numerical experiments.
 
 ----
 

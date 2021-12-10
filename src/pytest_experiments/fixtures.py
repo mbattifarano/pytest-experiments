@@ -6,13 +6,13 @@ from .common import PytestOutcome, PytestReportPhase
 
 def pytest_addoption(parser):
     """Add our pytest cli options."""
-    group = parser.getgroup('experiments')
+    group = parser.getgroup("experiments")
     group.addoption(
-        '--experiments-database',
-        action='store',
-        dest='experiments_database_uri',
-        default='sqlite:///experiments.db',
-        help='Set the value for the fixture "bar".'
+        "--experiments-database",
+        action="store",
+        dest="experiments_database_uri",
+        default="sqlite:///experiments.db",
+        help='Set the value for the fixture "bar".',
     )
 
 

@@ -13,6 +13,7 @@ class DocumentedEnum(enum.Enum):
 
     See https://stackoverflow.com/a/50473952
     """
+
     def __new__(cls, value, doc=None):
         self = object.__new__(cls)
         self._value_ = value
@@ -26,6 +27,7 @@ class PytestReportPhase(DocumentedEnum):
 
     These are the possible values that `TestReport.when` may take.
     """
+
     setup = 1, "The report generated during test setup."
     call = 2, "The report generated during test exectuion."
     teardown = 3, "The report generated during test teardown."
@@ -36,6 +38,7 @@ class PytestOutcome(DocumentedEnum):
 
     These are the possible values that `TestReport.outcome` may take.
     """
+
     passed = 1, "The phase succeeded."
     failed = 2, "The phase failed."
     skipped = 3, "The phase was skipped by pytest."
@@ -47,6 +50,7 @@ class ExperimentOutcome(DocumentedEnum):
     pytest reports are generated for each phase: setup, call, teardown.
     The experiment outcome reflects a single outcome from the three phases.
     """
+
     passed = 1, "The test passed."
     failed = 2, "The test failed."
     skipped = 3, "The test was skipped by pytest."

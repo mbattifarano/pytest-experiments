@@ -10,6 +10,7 @@ def numpy_encode(obj):
 def numpy_decode(obj):
     """Decode a numpy array."""
     import numpy  # noqa
+
     return numpy.array(obj)
 
 

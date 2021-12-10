@@ -15,8 +15,9 @@ def json_deserializer(s: str) -> dict:
 
 
 class TypeDispatchedJSONEncoder(json.JSONEncoder):
-    def __init__(self, *, skip_unknown_types=SKIP_UNKNOWN_JSON_TYPES,
-                 **kwargs):
+    def __init__(
+        self, *, skip_unknown_types=SKIP_UNKNOWN_JSON_TYPES, **kwargs
+    ):
         super().__init__(**kwargs)
         self._skip_unknown_types = skip_unknown_types
 
