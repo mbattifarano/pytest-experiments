@@ -25,7 +25,10 @@ setup(
     packages=find_packages(where='src', exclude=['test']),
     package_dir={"": "src"},
     python_requires='>=3.5',
-    install_requires=['pytest>=3.5.0'],
+    install_requires=[
+        'pytest>=3.5.0',
+        'SQLAlchemy>=1.4.28',
+    ],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Framework :: Pytest',
