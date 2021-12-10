@@ -48,7 +48,7 @@ Usage
 
 Contributing
 ------------
-Contributions are very welcome. Tests can be run with `tox`_, please ensure
+Contributions are very welcome. Tests can be run with `pytest`_, please ensure
 the coverage at least stays the same before you submit a pull request.
 
 License
@@ -71,6 +71,5 @@ If you encounter any problems, please `file an issue`_ along with a detailed des
 .. _`cookiecutter-pytest-plugin`: https://github.com/pytest-dev/cookiecutter-pytest-plugin
 .. _`file an issue`: https://github.com/mbattifarano/pytest-experiments/issues
 .. _`pytest`: https://github.com/pytest-dev/pytest
-.. _`tox`: https://tox.readthedocs.io/en/latest/
 .. _`pip`: https://pypi.org/project/pip/
 .. _`PyPI`: https://pypi.org/project
