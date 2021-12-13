@@ -5,6 +5,7 @@ Submodules
 ----------
 
 .. toctree::
+   :maxdepth: 4
 
    pytest_experiments.common
    pytest_experiments.config
@@ -18,6 +19,6 @@ Module contents
 ---------------
 
 .. automodule:: pytest_experiments
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
