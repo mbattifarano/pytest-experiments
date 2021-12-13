@@ -7,4 +7,4 @@ for an implementation of a numerical algorithm.
 
 def my_implementation(x):
     """Calculate the square of the input; a placeholder numerical method."""
-    return x**2
+    return x ** 2
