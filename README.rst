@@ -104,11 +104,22 @@ You can install "pytest-experiments" via `pip`_ from `PyPI`_::
 
 Contributing
 ------------
-Contributions are very welcome. Tests can be run with `pytest`_, please ensure
-the coverage at least stays the same before you submit a pull request.
 
-This project uses `black`_ for code formatting. Please run `bash format.sh` before
-opening a pull request.
+Contributions are very welcome. This project uses `poetry`_ for packaging.
+
+To get set up simply clone the repo and run
+
+::
+
+    poetry install
+    poetry run pre-commit install
+
+The first command will install the package along with all development dependencies
+in a virtual environment. The second command will install the pre-commit hook which
+will automatically format source files with `black`_.
+
+
+Tests can be run with ``pytest``
 
 Please document any code added with docstrings. New modules can be included in the
 documentation by running `bash document.sh`.
@@ -146,3 +157,4 @@ This `pytest`_ plugin was generated with `Cookiecutter`_ along with `@hackebrot`
 .. _`black`: https://black.readthedocs.io/en/stable/
 .. _`unit tests`: https://en.wikipedia.org/wiki/Unit_testing
 .. _`fixture`: https://docs.pytest.org/en/latest/explanation/fixtures.html
+.. _`poetry`: https://python-poetry.org/
