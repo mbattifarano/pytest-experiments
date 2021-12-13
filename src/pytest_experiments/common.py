@@ -70,3 +70,11 @@ def mark_utc(timestamp: dt.datetime) -> dt.datetime:
 def type_name_of(obj: Any) -> str:
     """Return the name of the input's type."""
     return type(obj).__name__
+
+
+def any_are_none(*args):
+    """Return True if any of args are None."""
+    for arg in args:
+        if arg is None:
+            return True
+    return False

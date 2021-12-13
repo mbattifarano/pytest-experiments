@@ -14,6 +14,10 @@ pytest-experiments
     :target: https://app.travis-ci.com/mbattifarano/pytest-experiments 
     :alt: See Build Status on travis
 
+.. image:: https://readthedocs.org/projects/pytest-experiments/badge/?version=latest
+    :target: https://pytest-experiments.readthedocs.io/en/latest/?badge=latest
+    :alt: Documentation Status
+
 A pytest plugin to help developers of research-oriented software projects keep track of the results of their numerical experiments.
 
 ----

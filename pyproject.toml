@@ -1,11 +1,12 @@
 [tool.poetry]
 name = "pytest-experiments"
-version = "0.1.0"
+version = "0.1.1"
 description = "A pytest plugin to help developers of research-oriented software projects keep track of the results of their numerical experiments."
 authors = ["Matt Battifarano <matthew.battifarano@gmail.com>"]
 license = "MIT"
 readme = "README.rst"
 repository = "https://github.com/mbattifarano/pytest-experiments"
+homepage = "https://pytest-experiments.readthedocs.io/en/latest/"
 classifiers = [
     'Development Status :: 4 - Beta',
     'Framework :: Pytest',
@@ -13,13 +14,11 @@ classifiers = [
     'Topic :: Software Development :: Testing',
     'Programming Language :: Python',
     'Programming Language :: Python :: 3',
-    'Programming Language :: Python :: 3.5',
-    'Programming Language :: Python :: 3.6',
     'Programming Language :: Python :: 3.7',
     'Programming Language :: Python :: 3.8',
+    'Programming Language :: Python :: 3.9',
     'Programming Language :: Python :: 3 :: Only',
     'Programming Language :: Python :: Implementation :: CPython',
-    'Programming Language :: Python :: Implementation :: PyPy',
     'Operating System :: OS Independent',
     'License :: OSI Approved :: MIT License',
 ]
@@ -28,7 +27,7 @@ classifiers = [
 experiments = "pytest_experiments.fixtures"
 
 [tool.poetry.dependencies]
-python = "^3.6.2"
+python = "^3.7"
 pytest = "^6.2.5"
 SQLAlchemy = "^1.4.28"
 
@@ -38,6 +37,7 @@ Sphinx = "^4.3.1"
 pytest-coverage = "^0.0"
 prospector = "^1.5.3"
 pre-commit = "^2.16.0"
+numpy = "^1.10.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
