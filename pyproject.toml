@@ -49,3 +49,4 @@ addopts = "--cov"
 
 [tool.black]
 line-length = 79
+extend-exclude = '\..*/'
