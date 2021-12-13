@@ -1,7 +1,7 @@
 from typing import Any
 import json
 from .config import TYPE_KEY, DATA_KEY, SKIP_UNKNOWN_JSON_TYPES, TYPE_MAPPINGS
-from .common import type_name_of
+from .common import type_name_of, any_are_none
 
 
 def json_serializer(obj: dict) -> str:
@@ -39,13 +39,5 @@ def object_hook(obj: dict) -> dict:
     data = obj.get(DATA_KEY, None)
     _, decoder = TYPE_MAPPINGS.get(typename, (None, None))
     if not any_are_none(data, decoder):
-        obj = decoder(data)
+        data = decoder(data)
     return data
-
-
-def any_are_none(*args):
-    """Return True if any of args are None."""
-    for arg in args:
-        if arg is None:
-            return True
-    return False
