@@ -94,10 +94,6 @@ subsequent development.
 See the ``demo`` directory for a detailed example-based walkthrough.
 
 
-Why a ``pytest`` plugin?
-------------------------
-
-
 Installation
 ------------
 
