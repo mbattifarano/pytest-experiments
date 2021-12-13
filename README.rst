@@ -121,8 +121,15 @@ will automatically format source files with `black`_.
 
 Tests can be run with ``pytest``
 
-Please document any code added with docstrings. New modules can be included in the
-documentation by running `bash document.sh`.
+Please document any code added with docstrings. New modules can be auto-documented by 
+running::
+
+    sphinx-apidoc -e -o docs/source src/pytest_experiments
+
+Documentation can be compiled (for example to html with ``make``)::
+
+    cd docs/
+    make html
 
 
 License
