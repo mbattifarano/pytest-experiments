@@ -6,6 +6,7 @@ authors = ["Matt Battifarano <matthew.battifarano@gmail.com>"]
 license = "MIT"
 readme = "README.rst"
 repository = "https://github.com/mbattifarano/pytest-experiments"
+homepage = https://pytest-experiments.readthedocs.io/en/latest/
 classifiers = [
     'Development Status :: 4 - Beta',
     'Framework :: Pytest',
