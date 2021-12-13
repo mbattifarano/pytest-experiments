@@ -5,8 +5,8 @@ python:
   - "3.8"
   - "3.9"
 install:
-  - pip install prospector pytest-coverage
-  - pip install .
+  - pip install poetry
+  - poetry install
 script:
   - pytest --cov
   - prospector
