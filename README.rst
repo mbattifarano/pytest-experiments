@@ -88,7 +88,7 @@ is wrong and the experiment should fail.
 
 However, we are not only interested in returning probabilities, we also want
 our model to return good predictions (e.g. the predictions have high accuracy
-and high fairness). We might have some conrete expectations about these metrics:
+and high fairness). We might have some concrete expectations about these metrics:
 for example we may wish to reject any result that has metrics strictly worse
 than some baseline, but it is not easy or meaningful to specify a criterion
 based on the accuracy and fairness values for when we should stop developing
