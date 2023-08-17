@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pytest-experiments"
-version = "0.1.1"
+version = "0.1.2"
 description = "A pytest plugin to help developers of research-oriented software projects keep track of the results of their numerical experiments."
 authors = ["Matt Battifarano <matthew.battifarano@gmail.com>"]
 license = "MIT"

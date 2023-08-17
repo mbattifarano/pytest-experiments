@@ -1,23 +1,43 @@
 import datetime as dt
 import pytest
+from typing import Any, Dict, Optional
+
 from .config import OUTCOMES_ATTR
 from .common import (
+    ExperimentRecord,
     PytestExperimentsError,
     PytestOutcome,
     PytestReportPhase,
     ExperimentOutcome,
+    Storage,
 )
 from .store import StorageManager, ExperimentModel
 
+def store_from_request_or_default(request: pytest.FixtureRequest) -> Storage:
+
+    pytestmarks = request.keywords.get("pytestmark", [])
+    experiment_mark = [mark for mark in pytestmarks if mark.name == "experiment"]
+
+    store = None
+
+    if len(experiment_mark) == 1:
+        store = experiment_mark[0].kwargs.get("store")
+
+    if store is None:
+        return StorageManager.from_pytest_request(request)
+    
+    return store
 
 class Experiment:
     def __init__(self, request: pytest.FixtureRequest) -> None:
         self.context = request
-        self.store = StorageManager(experiments_db_uri(self.context))
+
+        self.store: Storage = store_from_request_or_default(request)
+
         self.created_at = dt.datetime.utcnow()
         self.completed_at = None
         self.outcome = ExperimentOutcome.not_reported
-        self.data = {}
+        self.data: Dict[str, Any] = {}
 
     def record(self, **kwargs):
         """Record data about this experiment.
@@ -80,16 +100,19 @@ class Experiment:
         self.completed_at = dt.datetime.utcnow()
         self.outcome = to_experiment_outcome(self.get_reports())
 
-    def to_model(self) -> ExperimentModel:
+    def to_model(self) -> ExperimentRecord:
         """Render the experiment into its database model."""
-        return ExperimentModel(
+
+        record = ExperimentRecord(
             name=self.name,
             start_time=self.created_at,
-            end_time=self.completed_at,
+            end_time=self.completed_at or self.created_at,
             outcome=self.outcome.name,
             parameters=self.parameters,
             data=self.data,
         )
+
+        return record
 
     def save(self):
         """Save this experiment to the database."""
@@ -99,11 +122,6 @@ class Experiment:
         """Post process the experiment and save to the database."""
         self.post_process()
         self.save()
-
-
-def experiments_db_uri(request: pytest.FixtureRequest) -> str:
-    """Retrieve the URI of the database used to store experiment results."""
-    return request.config.option.experiments_database_uri
 
 
 def to_experiment_outcome(reports: dict) -> ExperimentOutcome:

@@ -1,3 +1,4 @@
+import json
 from pytest_experiments.store import StorageManager
 
 
@@ -152,3 +153,64 @@ def test_experiment_parameters(testdir):
 
     # make sure that that we get a '0' exit code for the testsuite
     assert result.ret == 0
+
+def test_alternative_storage(testdir):
+    """Test that the notebook persists data in the database."""
+
+    # create a temporary pytest test module
+    testdir.makepyfile(
+        """
+        import pytest
+        from pytest_experiments.store import NdJsonStore
+
+        @pytest.fixture
+        def zero():
+            return 0            
+
+        @pytest.mark.experiment(store=NdJsonStore("./test.ndjson"))
+        @pytest.mark.parametrize("a", [1, 2, 3])
+        def test_experiment_store_parameters_with_alternative_storage(notebook, zero, a):
+            notebook.record(
+                hello='world',
+                number=5.0,
+            )
+            assert True
+    """
+    )
+
+    # run pytest with the following cmd args
+    result = testdir.runpytest("-v")
+
+    # fnmatch_lines does an assertion internally
+    result.stdout.re_match_lines(
+        [
+            r".*::test_experiment_store_parameters_with_alternative_storage\[1\] PASSED.*",
+        ]
+    )
+
+    # the database was created
+    output_file = testdir.tmpdir / "test.ndjson"
+    assert output_file.exists() is True
+
+    with open(output_file, "r") as f:
+        experiments = [json.loads(element) for element in f.readlines()]
+
+    assert len(experiments) == 3
+
+    exp = experiments[0]
+    assert exp["name"] == "test_alternative_storage.py::test_experiment_store_parameters_with_alternative_storage[1]"
+    assert exp["data"] == {"hello": "world", "number": 5.0}
+    assert exp["outcome"] == "passed"
+    assert exp["parameters"] == {"zero": 0, "a": 1}
+
+    exp = experiments[1]
+    assert exp["name"] == "test_alternative_storage.py::test_experiment_store_parameters_with_alternative_storage[2]"
+    assert exp["data"] == {"hello": "world", "number": 5.0}
+    assert exp["outcome"] == "passed"
+    assert exp["parameters"] == {"zero": 0, "a": 2}
+
+    exp = experiments[2]
+    assert exp["name"] == "test_alternative_storage.py::test_experiment_store_parameters_with_alternative_storage[3]"
+    assert exp["data"] == {"hello": "world", "number": 5.0}
+    assert exp["outcome"] == "passed"
+    assert exp["parameters"] == {"zero": 0, "a": 3}
