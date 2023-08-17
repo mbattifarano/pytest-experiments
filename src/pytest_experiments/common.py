@@ -1,7 +1,14 @@
 """Package tools common across modules."""
 import enum
 import datetime as dt
-from typing import Any
+from typing import Any, Dict, NamedTuple
+
+try:
+    from typing import Protocol
+except:
+    from typing_extensions import Protocol
+
+import pytest
 
 
 class PytestExperimentsError(Exception):
@@ -57,6 +64,20 @@ class ExperimentOutcome(DocumentedEnum):
     error = 4, "The test failed during setup."
     not_reported = 5, "The test outcome was not reported."
 
+
+class ExperimentRecord(NamedTuple):
+    name: str
+    start_time: dt.datetime
+    end_time: dt.datetime
+    outcome: str
+    parameters: Dict[str, Any]
+    data: Dict[str, Any]
+
+class Storage(Protocol):
+
+    def record_experiment(self, record: ExperimentRecord):
+        """ Record an experiment in the storage """
+        raise NotImplementedError
 
 def mark_utc(timestamp: dt.datetime) -> dt.datetime:
     """Mark a UTC timestamp with the UTC timezone.

@@ -73,6 +73,21 @@ At the end of the test the notebook fixture will save experiment metadata, the
 inputs, and whatever was passed to ``notebook.record`` to a database. By default,
 this database will be a sqlite database called ``experiments.db``.
 
+To use a different storage you can pass an `Storage` implementent to `mark.experiment`:
+
+.. code-block:: python
+    
+    import pytest
+    from pytest_experiments.store import NdJsonStore
+
+    @pytest.mark.experiment(store=NdJsonStore(file_path="stored-records.ndjson"))
+    @pytest.mark.parameterize("x", [1, 2, 3])  # The inputs; we will run this experiment for x=1, x=2, and x=3
+    def test_my_numerical_method(notebook, x):  # Request the notebook fixture
+        result = my_implementation(x)
+        assert result_is_valid(result)  # our concrete expectations about the result
+        notebook.record(performance=performance_metric(result))  # record the performance
+
+
 A machine learning example
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 

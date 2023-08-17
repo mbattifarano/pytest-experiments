@@ -1,5 +1,10 @@
 import datetime as dt
-from typing import List
+from pathlib import Path
+from typing import List, Union
+import pytest
+import os
+import json
+
 from sqlalchemy import (
     create_engine,
     select,
@@ -11,12 +16,11 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import declarative_base, Session
 from .config import EXPERIMENT_TABLENAME
-from .common import mark_utc
+from .common import ExperimentRecord, mark_utc
 from .json_tools import json_serializer, json_deserializer
 
 
 Base = declarative_base()
-
 
 class ExperimentModel(Base):
     """The data model for an experiment.
@@ -88,16 +92,23 @@ def initialize_database(engine):
 
 
 class StorageManager:
+
     def __init__(self, db_uri: str) -> None:
+
         self._db_uri = db_uri
         self.engine = create_engine(
-            db_uri,
+            self._db_uri,
             json_serializer=json_serializer,
             json_deserializer=json_deserializer,
             future=True,
         )
         initialize_database(self.engine)
 
+    @classmethod 
+    def from_pytest_request(cls, request: pytest.FixtureRequest):
+
+        return StorageManager(experiments_db_uri(request))
+    
     @property
     def db_uri(self) -> str:
         return self._db_uri
@@ -106,16 +117,51 @@ class StorageManager:
         """Create a database session."""
         return Session(self.engine)
 
-    def record_experiment(self, experiment: ExperimentModel):
+    def record_experiment(self, record: ExperimentRecord):
         """Record an experiment to the database.
 
         Args:
-            experiment (ExperimentModel): The experiment to record.
+            record (ExperimentRecord): The record to store.
         """
+
+        model = ExperimentModel(
+            name=record.name,
+            start_time=record.start_time,
+            end_time=record.end_time,
+            outcome=record.outcome,
+            parameters=record.parameters,
+            data=record.data,
+        )
+        
         with self.create_session() as session, session.begin():
-            session.add(experiment)
+            session.add(model)
 
     def get_all_experiments(self) -> List[ExperimentModel]:
         """Return all experiments in the database."""
         with self.create_session() as session:
             return session.execute(select(ExperimentModel)).scalars().all()
+
+
+class NdJsonStore:
+
+    def __init__(self, file_path: Union[str, Path]):
+        self.file_path = file_path
+
+    def record_experiment(self, record: ExperimentRecord):
+        with open(self.file_path, "a", encoding="utf8") as f:
+            f.write(
+                json.dumps(
+                    dict(
+                        name=record.name,
+                        start_time=str(record.start_time),
+                        end_time=str(record.end_time),
+                        outcome=record.outcome,
+                        parameters=record.parameters,
+                        data=record.data,
+                    )
+                ) + os.linesep
+            )
+
+def experiments_db_uri(request: pytest.FixtureRequest) -> str:
+    """Retrieve the URI of the database used to store experiment results."""
+    return request.config.option.experiments_database_uri
